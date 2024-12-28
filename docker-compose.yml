@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  db:
+    image: container-registry.oracle.com/database/free:latest
+    container_name: db
+    environment:
+      - ORACLE_SID=FREE
+      - ORACLE_CHARACTERSET=AL32UTF8
+      - ORACLE_PWD=Oracle_123
+    ports:
+      - "1521:1521"  # Пробрасывание порта Oracle Database
+    volumes:
+      - oracle-data:/opt/oracle/oradata  # Хранение данных БД
+      - oracle-backup:/opt/oracle/back  # Резервное копирование
+    expose:
+      - "1521"
+    restart: always
+
+volumes:
+  oracle-data:
+  oracle-backup:

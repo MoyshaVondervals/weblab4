@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: lab4t
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:FREE
+    username: system
+    password: Oracle_123
+    driver-class-name: oracle.jdbc.OracleDriver
+  jpa:
+    properties:
+      hibernate:
+        ddl-auto: update
+        show_sql: true
+        format_sql: true
+
+    database: oracle
+
+logging:
+  level:
+    org.springframework.security: DEBUG
