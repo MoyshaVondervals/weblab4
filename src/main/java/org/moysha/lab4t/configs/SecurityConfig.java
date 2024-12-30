@@ -23,27 +23,19 @@ public class SecurityConfig {
         return new InMemoryUserDetailsManager(user);
     }
 
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        return http.csrf(AbstractHttpConfigurer::disable)
-//                .authorizeHttpRequests(auth->auth.requestMatchers("/welcome","/login").permitAll()
-//                .requestMatchers("/**").authenticated())
-//                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
-//                .formLogin(formLogin->formLogin.loginPage("/login"))
-//                .build();
-//
-//    }
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
+
+@Bean
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http.csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(authorize -> authorize
-                    .requestMatchers("/", "/welcome", "/login").permitAll() // Укажите доступные URL
+                    .requestMatchers("/", "/login", "/register").permitAll() // Разрешаем доступ к стартовой странице и логину
                     .anyRequest().authenticated()
+
             )
             .formLogin(form -> form
                     .loginPage("/login") // URL кастомной страницы логина
-                    .loginProcessingUrl("/login-page") // URL для обработки формы (из action формы)
-                    .defaultSuccessUrl("/welcome") // Перенаправление после успешного входа
+                    .loginProcessingUrl("/login") // URL для обработки формы (из action формы)
+                    .defaultSuccessUrl("/startPage") // Перенаправление после успешного входа
                     .failureUrl("/login?error=true") // Перенаправление при ошибке входа
                     .permitAll()
             )
@@ -54,7 +46,7 @@ public class SecurityConfig {
             );
 
     return http.build();
-    }
+}
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
