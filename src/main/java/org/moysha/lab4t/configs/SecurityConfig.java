@@ -28,16 +28,13 @@ public class SecurityConfig {
 public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http.csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(authorize -> authorize
-                    .requestMatchers("/", "/login", "/register").permitAll() // Разрешаем доступ к стартовой странице и логину
-                    .anyRequest().authenticated()
-
+                    .requestMatchers("/register", "/login", "/logout").permitAll() // Доступ к этим маршрутам без аутентификации
+                    .anyRequest().authenticated() // Все остальные маршруты требуют аутентификации
             )
             .formLogin(form -> form
-                    .loginPage("/login") // URL кастомной страницы логина
-                    .loginProcessingUrl("/login") // URL для обработки формы (из action формы)
-                    .defaultSuccessUrl("/startPage") // Перенаправление после успешного входа
-                    .failureUrl("/login?error=true") // Перенаправление при ошибке входа
-                    .permitAll()
+                    .loginProcessingUrl("/login") // Spring Security обрабатывает запросы логина на этом URL
+                    .defaultSuccessUrl("/workspace", true) // Перенаправление после успешного входа
+                    .failureUrl("/login?error=true") // Перенаправление при ошибке
             )
             .logout(logout -> logout
                     .logoutUrl("/logout")
