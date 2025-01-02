@@ -1,0 +1,61 @@
+/* Общие стили для всех страниц */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+}
+
+.login-page,
+.main-page {
+    padding: 20px;
+    text-align: center;
+}
+
+/* Десктопный режим */
+@media (min-width: 1211px) {
+    .login-page,
+    .main-page {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: #f4f4f4;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 40px;
+    }
+}
+
+/* Планшетный режим */
+@media (min-width: 852px) and (max-width: 1210px) {
+    .login-page,
+    .main-page {
+        padding: 30px;
+        background-color: #e8e8e8;
+    }
+
+    form div {
+        margin-bottom: 10px;
+    }
+}
+
+/* Мобильный режим */
+@media (max-width: 851px) {
+    .login-page,
+    .main-page {
+        padding: 10px;
+        background-color: #fff;
+    }
+
+    button {
+        width: 100%;
+    }
+}
