@@ -1,66 +1,74 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { login } from "../redux/authSlice";
 
-const Login = () => {
+const LoginPage = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        const formData = new URLSearchParams();
-        formData.append("username", username);
-        formData.append("password", password);
 
         try {
-            const response = await fetch("/login", {
+            const response = await fetch("http://localhost:8080/loginUser", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
+                credentials: "include",
                 body: JSON.stringify({ username, password }),
             });
 
             if (response.ok) {
-                navigate("/workspace"); // Перенаправление в рабочую область после успешного входа
+                dispatch(login());
+                navigate("/dashboard");
             } else {
-                setError("Invalid username or password");
+                setErrorMessage("Invalid username or password.");
             }
-        } catch (err) {
-            setError("An error occurred. Please try again.");
+        } catch (error) {
+            setErrorMessage("An error occurred. Please try again.");
         }
     };
 
     return (
-        <div>
+        <>
+            <div className="cap">
+                <h1 id="cap">Покалюхин Илья Игоревич</h1>
+                <h2>Группа: P3210</h2>
+                <p>Вариант: 521992</p>
+            </div>
+        <div className="login-page">
             <h1>Login</h1>
             <form onSubmit={handleLogin}>
                 <div>
-                    <label htmlFor="username">Username:</label>
+                    <label>Username:</label>
                     <input
                         type="text"
-                        id="username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         required
                     />
                 </div>
                 <div>
-                    <label htmlFor="password">Password:</label>
+                    <label>Password:</label>
                     <input
                         type="password"
-                        id="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
                 </div>
                 <button type="submit">Login</button>
+                {errorMessage && <p className="error-message">{errorMessage}</p>}
             </form>
-            {error && <p style={{color: "red"}}>{error}</p>}
         </div>
+            </>
     );
 };
 
-export default Login;
+export default LoginPage;

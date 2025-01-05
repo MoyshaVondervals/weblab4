@@ -1,61 +1,135 @@
-/* Общие стили для всех страниц */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(#{resource['css:ITMO_University.png']});
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.5;
+    z-index: -1;
 }
 
-h1 {
-    text-align: center;
-    margin-top: 20px;
+body{
+    font-family: "Comfortaa", sans-serif;
+    background-size: 100%;
+
+}
+.CheckButton p, [id$="value"]{
+    font-family: "Comfortaa", sans-serif;
 }
 
-.error-message {
-    color: red;
-    text-align: center;
+
+.cap, .container{
+    width: 100%;
+    height: fit-content;
+    margin-top: 30px;
+    background-color:  rgba(0, 29, 244, 0.05);
+    backdrop-filter: blur(5px);
 }
 
-.login-page,
-.main-page {
-    padding: 20px;
-    text-align: center;
-}
 
-/* Десктопный режим */
-@media (min-width: 1211px) {
-    .login-page,
-    .main-page {
-        max-width: 800px;
-        margin: 0 auto;
-        background-color: #f4f4f4;
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        padding: 40px;
+.cap {
+    margin-top: 0;
+    padding: 5px;
+    h1, h2, p{
+        text-align: center;
+        color: blue;
+        font-size: 30px;
     }
-}
-
-/* Планшетный режим */
-@media (min-width: 852px) and (max-width: 1210px) {
-    .login-page,
-    .main-page {
-        padding: 30px;
-        background-color: #e8e8e8;
-    }
-
-    form div {
-        margin-bottom: 10px;
-    }
-}
-
-/* Мобильный режим */
-@media (max-width: 851px) {
-    .login-page,
-    .main-page {
-        padding: 10px;
-        background-color: #fff;
+    h2 {
+        font-size: 25px;
     }
 
-    button {
+    p {
+        font-size: 20px;
+    }
+
+}
+#clockBox{
+    display: flex;
+    justify-content: center;  /* Центрирует по горизонтали */
+    align-items: center;
+    font-size: 144px;
+    color: blue;
+}
+
+
+.container, #form, #CheckField{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+
+}
+
+#form, #CheckField{
+    flex-direction: column;
+    padding: 50px;
+}
+
+[class^="box-"] {
+    padding: 5px;
+    width: 100%;
+
+    height: fit-content;
+    border-style: solid;
+    border-color: #4c4c4c;
+    border-width: 1px;
+    border-radius: 10px;
+}
+
+
+.box-4 {
+    width: 380px;
+    height: 380px;
+
+}
+.box-5{
+    button{
         width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0);
+        border-width: 0;
+        border-radius: 5px;
     }
 }
+
+
+.box-6{
+    background-color: white;
+}
+
+.box-7{
+    width: fit-content;
+    height: fit-content;
+}
+
+
+
+td {
+    border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+#ImgBox {
+    background-color: white;
+}
+
+.CheckButton:hover {
+    background-color: #a5bdf8;
+}
+
+.CheckButton:active {
+    background-color: cornflowerblue;
+}
+
+.geometryShape {
+    fill: rgba(0, 0, 255, 0.5);
+}
+.geometryShape:hover{
+    fill: rgba(0, 0, 255, 0.7);
+}
+

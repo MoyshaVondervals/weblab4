@@ -17,15 +17,24 @@ public class UserService {
     public boolean registerUser(String username, String password) {
         if (userRepository.findByUsername(username) != null) {
             System.out.println(username + " already exists");
-            return false; // Пользователь с таким именем уже существует
+            return false;
         }
 
 
         User user = new User();
         user.setUsername(username);
-        user.setPassword(passwordEncoder.encode(password)); // Шифруем пароль
-        userRepository.save(user); // Сохраняем пользователя в базу данных
+        user.setPassword(passwordEncoder.encode(password));
+        userRepository.save(user);
         return true;
+    }
+
+    @Transactional
+    public boolean loginUser(String username, String password) {
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            return false;
+        }
+        return passwordEncoder.matches(password, user.getPassword());
     }
 
 }

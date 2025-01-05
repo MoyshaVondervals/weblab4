@@ -7,6 +7,7 @@ const RegisterPage = () => {
     const [password, setPassword] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const navigate = useNavigate();
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -32,11 +33,17 @@ const RegisterPage = () => {
     };
 
     return (
-        <div className="register-page">
-            <h1>Register</h1>
-            <form onSubmit={handleRegister}>
-                <div>
-                    <label>Username:</label>
+        <>
+        <div className="cap">
+            <h1 id="cap">Покалюхин Илья Игоревич</h1>
+            <h2>Группа: P3210</h2>
+            <p>Вариант: 521992</p>
+        </div>
+    <div className="register-page">
+        <h1>Register</h1>
+        <form onSubmit={handleRegister}>
+            <div>
+                <label>Username:</label>
                     <input
                         type="text"
                         value={username}
@@ -57,7 +64,10 @@ const RegisterPage = () => {
                 {successMessage && <p className="success-message">{successMessage}</p>}
                 {errorMessage && <p className="error-message">{errorMessage}</p>}
             </form>
+            <button onClick={() => navigate("/loginUser")}>Go to login</button>
+            <button onClick={() => navigate("/")}>Back</button>
         </div>
+            </>
     );
 };
 
