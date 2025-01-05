@@ -1,30 +1,26 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import WelcomePage from "./components/WelcomePage";
 import LoginPage from "./components/LoginPage";
 import RegisterPage from "./components/RegisterPage";
 import Dashboard from "./components/DashBoard";
 import { DatePicker } from 'antd';
+import PrivateRoute from "./PrivateRoute";
 
 const App = () => {
-    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
     return (
         <Router>
             <Routes>
                 <Route path="/" element={<WelcomePage />} />
-                <Route path="/loginUser" element={<LoginPage />} />
+                <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
-                <Route
-                    path="/dashboard"
-                    element={
-                        isAuthenticated ? <Dashboard /> : <Navigate to="/loginUser" />
-                    }
-                />
+                {/*<Route path="/dashboard" element={<PrivateRoute component={Dashboard} />} />*/}
+                <Route path="/dashboard" element={<Dashboard />} />
             </Routes>
         </Router>
     );
 };
+
 
 export default App;

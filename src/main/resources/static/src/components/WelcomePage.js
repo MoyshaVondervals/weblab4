@@ -15,7 +15,7 @@ const WelcomePage = () => {
             <div className="welcome-page">
                 <h1>Welcome to Our Application</h1>
                 <p>Choose an option below:</p>
-                    <button onClick={() => navigate("/loginUser")}>Login</button>
+                    <button onClick={() => navigate("/login")}>Login</button>
                     <button onClick={() => navigate("/register")}>Register</button>
             </div>
         </>

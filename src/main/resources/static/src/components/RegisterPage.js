@@ -64,7 +64,7 @@ const RegisterPage = () => {
                 {successMessage && <p className="success-message">{successMessage}</p>}
                 {errorMessage && <p className="error-message">{errorMessage}</p>}
             </form>
-            <button onClick={() => navigate("/loginUser")}>Go to login</button>
+            <button onClick={() => navigate("/login")}>Go to login</button>
             <button onClick={() => navigate("/")}>Back</button>
         </div>
             </>

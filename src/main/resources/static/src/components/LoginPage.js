@@ -1,21 +1,18 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { login } from "../redux/authSlice";
 
 const LoginPage = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
 
         try {
-            const response = await fetch("http://localhost:8080/loginUser", {
+            const response = await fetch("/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -25,7 +22,6 @@ const LoginPage = () => {
             });
 
             if (response.ok) {
-                dispatch(login());
                 navigate("/dashboard");
             } else {
                 setErrorMessage("Invalid username or password.");

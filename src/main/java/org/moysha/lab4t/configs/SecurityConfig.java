@@ -30,13 +30,28 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/register", "/loginUser").permitAll() // Публичные маршруты
-                        .anyRequest().authenticated()
+                        .requestMatchers(
+                                "/",             // Главная страница
+                                "/index.html",   // React-файлы
+                                "/static/**",    // Статические ресурсы React
+                                "/favicon.ico",  // Иконка
+                                "/api/auth/**"
+                        ).permitAll() // Разрешаем без авторизации
+                        .anyRequest().authenticated() // Остальные запросы требуют аутентификации
                 )
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)) // Использование сессий
+
+                // Включаем стандартный обработчик формы логина
+                .formLogin(form -> form
+                        .loginPage("/login") // URL страницы логина
+                        .loginProcessingUrl("/login") // URL для обработки логина
+                        .defaultSuccessUrl("/dashboard", true) // Перенаправление после успешного входа
+                        .permitAll()
+                )
+
+                // Настройка логаута
                 .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login")
+                        .logoutUrl("/logout") // URL для выхода из системы
+                        .logoutSuccessUrl("/login") // Куда перенаправить после выхода
                         .permitAll()
                 );
 

@@ -6,6 +6,7 @@ import org.moysha.lab4t.models.User;
 import org.moysha.lab4t.services.PointService;
 import org.moysha.lab4t.services.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +18,14 @@ public class AppController {
 
     private PointService pointService;
     private UserService userService;
-
+    @GetMapping("/check")
+    public boolean isAuthenticated(Authentication authentication) {
+        return authentication != null && authentication.isAuthenticated();
+    }
+    @GetMapping(value = {"/", "/login", "/dashboard", "/register"})
+    public String forwardToReact() {
+        return "forward:/index.html"; // Передаём запрос на React
+    }
 
 //    @GetMapping("/all-app")
 //    public List<Application> applicationList(){
@@ -39,20 +47,12 @@ public class AppController {
         }
     }
 
-    @PostMapping("/loginUser")
-    public ResponseEntity<?> loginUser(@RequestBody User user) {
-        System.out.println("1!!@#$%^%$#@!@#$%^&");
-        boolean success = userService.loginUser(user.getUsername(), user.getPassword());
-        if (success) {
-            return ResponseEntity.ok("Login successful");
-        }
-        return ResponseEntity.badRequest().body("Login failed");
-    }
+
 
     @PostMapping("/addPoint")
-    public ResponseEntity<?> addPoint(@RequestBody Point point) {
+    public ResponseEntity<?> addPoint() {
         System.out.println("Add point");
-        pointService.addPoint(point);
+//        pointService.addPoint(point);
         return ResponseEntity.ok("Add point successful");
     }
 

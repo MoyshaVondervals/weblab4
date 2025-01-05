@@ -1,20 +1,17 @@
 import React, { useState } from "react";
 import "../styles/styles.css";
 import { InputNumber, Select } from "antd";
-import {login, logout} from "../redux/authSlice";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard= () => {
     const [Xvalue, setX] = useState("");
     const [Yvalue, setY] = useState("");
     const [Rvalue, setR] = useState("");
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const sendRequest = async () => {
         try {
-            const response = await fetch("http://localhost:8080/addPoint", {
+            const response = await fetch("/addPoint", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -30,7 +27,7 @@ const Dashboard= () => {
     };
 
     const handleLogout = () => {
-        dispatch(logout());
+
         navigate("/login");
     };
 
