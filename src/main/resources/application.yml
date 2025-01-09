@@ -18,3 +18,10 @@ spring:
 logging:
   level:
     org.springframework.security: DEBUG
+server:
+  servlet:
+    session:
+      persistent: false # Отключаем сохранение сессий
+jwt:
+  secret: YourSecureSecretKeyThatIsAtLeast32CharactersLong
+  header: Authorization

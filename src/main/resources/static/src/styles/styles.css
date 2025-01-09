@@ -1,4 +1,3 @@
-
 body::before {
     content: "";
     position: fixed;
@@ -14,29 +13,27 @@ body::before {
     z-index: -1;
 }
 
-body{
+body {
     font-family: "Comfortaa", sans-serif;
     background-size: 100%;
-
 }
-.CheckButton p, [id$="value"]{
+
+.CheckButton p, [id$="value"] {
     font-family: "Comfortaa", sans-serif;
 }
 
-
-.cap, .container{
+.cap, .container {
     width: 100%;
     height: fit-content;
     margin-top: 30px;
-    background-color:  rgba(0, 29, 244, 0.05);
+    background-color: rgba(0, 29, 244, 0.05);
     backdrop-filter: blur(5px);
 }
-
 
 .cap {
     margin-top: 0;
     padding: 5px;
-    h1, h2, p{
+    h1, h2, p {
         text-align: center;
         color: blue;
         font-size: 30px;
@@ -48,88 +45,158 @@ body{
     p {
         font-size: 20px;
     }
-
 }
-#clockBox{
+
+.container {
     display: flex;
-    justify-content: center;  /* Центрирует по горизонтали */
-    align-items: center;
-    font-size: 144px;
-    color: blue;
+    justify-content: flex-start; /* Поля ввода слева, график справа */
+    gap: 30px;
+    align-items: flex-start; /* Выравнивание элементов по верхнему краю */
+    padding: 20px;
 }
 
-
-.container, #form, #CheckField{
+/* Поля ввода */
+#form {
     display: flex;
-    gap: 20px;
-    align-items: center;
-
+    flex-direction: column; /* Поля ввода в столбик */
+    gap: 15px; /* Расстояние между полями */
+    width: 200px; /* Фиксированная ширина полей ввода */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Светлый фон */
+    border-radius: 10px; /* Скругленные углы */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Легкая тень */
 }
 
-#form, #CheckField{
-    flex-direction: column;
-    padding: 50px;
+#form label {
+    font-weight: bold;
+    color: black;
+    margin-bottom: 5px; /* Отступ между меткой и полем */
 }
 
-[class^="box-"] {
-    padding: 5px;
-    width: 100%;
-
-    height: fit-content;
-    border-style: solid;
-    border-color: #4c4c4c;
-    border-width: 1px;
-    border-radius: 10px;
+#form select, #form input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%; /* Поля ввода занимают всю ширину контейнера */
 }
-
 
 .box-4 {
     width: 380px;
     height: 380px;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    background-color: white;
 }
-.box-5{
-    button{
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0,0,0,0);
-        border-width: 0;
+
+.box-5 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    button {
+        width: 100px;
+        height: 40px;
+        background-color: rgba(0, 0, 0, 0.05);
+        border: 1px solid #4c4c4c;
         border-radius: 5px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #a5bdf8;
+    }
+    button:active {
+        background-color: cornflowerblue;
     }
 }
 
-
-.box-6{
+.box-6 {
+    width: 400px;
+    max-height: 400px;
+    overflow-y: auto;
     background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
 }
 
-.box-7{
-    width: fit-content;
-    height: fit-content;
-}
-
-
-
-td {
-    border: 1px solid rgba(0, 0, 0, 0.5);
-}
-
-#ImgBox {
-    background-color: white;
-}
-
-.CheckButton:hover {
-    background-color: #a5bdf8;
-}
-
-.CheckButton:active {
-    background-color: cornflowerblue;
-}
-
+/* Стили графика */
 .geometryShape {
     fill: rgba(0, 0, 255, 0.5);
 }
-.geometryShape:hover{
+
+.geometryShape:hover {
     fill: rgba(0, 0, 255, 0.7);
 }
 
+/* Адаптивность */
+
+/* Мобильные устройства (<657px) */
+@media (max-width: 657px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    #form {
+        width: 100%;
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .box-4 {
+        width: 300px;
+        height: 300px;
+    }
+
+    .box-6 {
+        width: 100%;
+    }
+}
+
+/* Планшетные устройства (657px - 1273px) */
+@media (min-width: 657px) and (max-width: 1273px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    #form {
+        width: 80%;
+        padding: 20px;
+        gap: 15px;
+    }
+
+    .box-4 {
+        width: 340px;
+        height: 340px;
+    }
+
+    .box-6 {
+        width: 90%;
+    }
+}
+
+/* Десктопные устройства (>1273px) */
+@media (min-width: 1273px) {
+    .container {
+        flex-direction: row;
+        justify-content: flex-start; /* Поля ввода слева, график справа */
+        gap: 30px;
+    }
+
+    #form {
+        width: 200px;
+    }
+
+    .box-4 {
+        width: 380px;
+        height: 380px;
+    }
+
+    .box-6 {
+        width: 400px;
+    }
+}

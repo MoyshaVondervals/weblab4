@@ -1,44 +1,41 @@
-import React, { useState } from "react";
+import React, {useRef, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/styles.css";
+import axios from "axios";
+import {useSetAtom} from "jotai/index";
+import {globalUsernameAtom, jwtTokenAtom} from "../redux/store";
 
 const RegisterPage = () => {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [successMessage, setSuccessMessage] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const passwordRef = useRef(null);
+    const setJwtToken = useSetAtom(jwtTokenAtom);
+    const setGlobalUsername = useSetAtom(globalUsernameAtom)
     const navigate = useNavigate();
 
-    const handleRegister = async (e) => {
-        e.preventDefault();
+    const handleRegister = async () => {
         try {
-            const response = await fetch("/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ username, password }),
-            });
-
-            if (response.ok) {
-                setSuccessMessage("Registration successful! You can now log in.");
-                setErrorMessage("");
-            } else {
-                setErrorMessage("Registration failed. Try a different username.");
-                setSuccessMessage("");
+            if (!username || !password) {
+                setError('Please enter both username and password.');
+                return;
             }
+
+            const response = await axios.post('http://localhost:8080/api/auth/register', {
+                "username": username,
+                "password": password
+            });
+            setJwtToken(response.data.token);
+            setGlobalUsername(response.data.username);
+            navigate('/dashboard');
         } catch (error) {
-            setErrorMessage("An error occurred. Please try again.");
+            console.error('Login failed:');
+            setError('Invalid username or password.');
         }
     };
 
     return (
         <>
-        <div className="cap">
-            <h1 id="cap">Покалюхин Илья Игоревич</h1>
-            <h2>Группа: P3210</h2>
-            <p>Вариант: 521992</p>
-        </div>
     <div className="register-page">
         <h1>Register</h1>
         <form onSubmit={handleRegister}>
@@ -61,8 +58,7 @@ const RegisterPage = () => {
                     />
                 </div>
                 <button type="submit">Register</button>
-                {successMessage && <p className="success-message">{successMessage}</p>}
-                {errorMessage && <p className="error-message">{errorMessage}</p>}
+
             </form>
             <button onClick={() => navigate("/login")}>Go to login</button>
             <button onClick={() => navigate("/")}>Back</button>
@@ -72,3 +68,5 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
+
+
