@@ -14,12 +14,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/dot")
-public class DotController {
+public class PointController {
 
     private final PointService pointService;
 
     @Autowired
-    public DotController(PointService pointService) {
+    public PointController(PointService pointService) {
         this.pointService = pointService;
     }
 

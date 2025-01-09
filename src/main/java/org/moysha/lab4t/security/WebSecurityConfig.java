@@ -28,11 +28,11 @@ public class WebSecurityConfig {
 
 
     @Autowired
-    private JwtAuthEntryPoint authEntryPoint;
+    private JwtAuthEntryPointImpl authEntryPoint;
 
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthFilter jwtAuthFilter) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtFilter jwtAuthFilter) throws Exception {
         return http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
@@ -77,8 +77,8 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public JwtAuthFilter jwtAuthFilter() {
-        return new JwtAuthFilter();
+    public JwtFilter jwtAuthFilter() {
+        return new JwtFilter();
     }
 
     @Autowired

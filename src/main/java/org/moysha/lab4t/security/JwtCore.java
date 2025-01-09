@@ -15,7 +15,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
-public class JwtProvider {
+public class JwtCore {
 
     @Value("${jwt.secret}")
     private String jwtSecret;

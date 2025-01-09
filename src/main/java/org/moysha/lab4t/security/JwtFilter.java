@@ -22,10 +22,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class JwtAuthFilter extends OncePerRequestFilter {
+public class JwtFilter extends OncePerRequestFilter {
 
     @Autowired
-    private JwtProvider jwtProvider;
+    private JwtCore jwtCore;
 
     @Autowired
     private CustomUserDetailsService userDetailsService;
@@ -38,11 +38,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         String jwtToken = getJWTFromRequest(request);
-        if (StringUtils.hasText(jwtToken) && jwtProvider.validateToken(jwtToken)) {
+        if (StringUtils.hasText(jwtToken) && jwtCore.validateToken(jwtToken)) {
 
-            String username = jwtProvider.getUsernameFromJWT(jwtToken);
+            String username = jwtCore.getUsernameFromJWT(jwtToken);
 
-            List<String> roles = jwtProvider.getRolesFromJWT(jwtToken);
+            List<String> roles = jwtCore.getRolesFromJWT(jwtToken);
             List<GrantedAuthority> authorities = roles.stream()
                     .map(role -> new SimpleGrantedAuthority(role.replace("ROLE_", "")))
                     .collect(Collectors.toList());
