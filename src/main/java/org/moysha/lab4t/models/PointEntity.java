@@ -7,7 +7,7 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @Table(name="Points")
-public class Dot {
+public class PointEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -30,9 +30,9 @@ public class Dot {
 
 
 
-    public Dot(DotRequestDto dotRequestDto) {
-        this.x = dotRequestDto.getX();
-        this.y = dotRequestDto.getY();
-        this.r = dotRequestDto.getR();
+    public PointEntity(PointReqForm pointReqForm) {
+        this.x = pointReqForm.getX();
+        this.y = pointReqForm.getY();
+        this.r = pointReqForm.getR();
     }
 }

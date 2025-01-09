@@ -2,7 +2,7 @@ package org.moysha.lab4t.service;
 
 import lombok.AllArgsConstructor;
 import org.moysha.lab4t.models.AppUser;
-import org.moysha.lab4t.models.AuthResponseDto;
+import org.moysha.lab4t.models.AuthRespForm;
 import org.moysha.lab4t.repository.UserRepository;
 import org.moysha.lab4t.security.JwtProvider;
 import org.springframework.http.HttpStatus;
@@ -39,13 +39,13 @@ public class AuthService {
         return new ResponseEntity<>("User registered success!", HttpStatus.OK);
     }
 
-    public ResponseEntity<AuthResponseDto> login(String username, String password) {
+    public ResponseEntity<AuthRespForm> login(String username, String password) {
         System.err.println("Login start work");
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtProvider.generateToken(authentication);
         System.err.println("login success");
-        return new ResponseEntity<>(new AuthResponseDto(token, username), HttpStatus.OK);
+        return new ResponseEntity<>(new AuthRespForm(token, username), HttpStatus.OK);
     }
 }

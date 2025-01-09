@@ -1,7 +1,7 @@
 package org.moysha.lab4t.controllers;
 
 import lombok.AllArgsConstructor;
-import org.moysha.lab4t.models.AuthResponseDto;
+import org.moysha.lab4t.models.AuthRespForm;
 import org.moysha.lab4t.models.UserDto;
 import org.moysha.lab4t.service.AuthService;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +27,7 @@ public class AuthController {
     }
 
     @PostMapping("login")
-    public ResponseEntity<AuthResponseDto> login(@RequestBody UserDto userDto) {
+    public ResponseEntity<AuthRespForm> login(@RequestBody UserDto userDto) {
         String username = userDto.getUsername();
         String password = userDto.getPassword();
         return authService.login(username, password);

@@ -2,8 +2,8 @@ package org.moysha.lab4t.service;
 
 import lombok.AllArgsConstructor;
 import org.moysha.lab4t.models.AppUser;
-import org.moysha.lab4t.models.Dot;
-import org.moysha.lab4t.repository.DotRepository;
+import org.moysha.lab4t.models.PointEntity;
+import org.moysha.lab4t.repository.PointRepository;
 import org.moysha.lab4t.repository.UserRepository;
 import org.moysha.lab4t.validators.CheckArea;
 
@@ -16,37 +16,37 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class DotService {
+public class PointService {
 
-    private final DotRepository dotRepository;
+    private final PointRepository pointRepository;
     private final UserRepository userRepository;
     private final CheckArea checkArea;
 
 
 
-    public List<Dot> findAllByUsername(String username) {
+    public List<PointEntity> findAllByUsername(String username) {
         System.out.printf("Get points by username: %s\n", username);
         Integer userId = userRepository.findIdByUsername(username);
-        List<Dot> dots = dotRepository.findAllByAppUser_Id(userId);
-        if (dots == null) {
+        List<PointEntity> pointEntities = pointRepository.findAllByAppUser_Id(userId);
+        if (pointEntities == null) {
             return new ArrayList<>();
         }
-        return dots;
+        return pointEntities;
     }
 
-    public Dot saveForUser(Dot newDot, String username) {
+    public PointEntity saveForUser(PointEntity newPointEntity, String username) {
 
         AppUser user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Username not found."));
 
 
-        boolean isHit = checkArea.check(newDot.getX(), newDot.getY(), newDot.getR());
-        newDot.setStatus(isHit);
-        newDot.setAppUser(user);
-        dotRepository.save(newDot);
+        boolean isHit = checkArea.check(newPointEntity.getX(), newPointEntity.getY(), newPointEntity.getR());
+        newPointEntity.setStatus(isHit);
+        newPointEntity.setAppUser(user);
+        pointRepository.save(newPointEntity);
 
 
 
-        return newDot;
+        return newPointEntity;
     }
 }

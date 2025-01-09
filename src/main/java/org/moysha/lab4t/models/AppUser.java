@@ -25,6 +25,6 @@ public class AppUser {
     private String password;
 
     @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Dot> dots = new ArrayList<>();
+    private List<PointEntity> pointEntities = new ArrayList<>();
 
 }

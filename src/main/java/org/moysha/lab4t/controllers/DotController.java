@@ -1,10 +1,10 @@
 package org.moysha.lab4t.controllers;
 
-import org.moysha.lab4t.models.Dot;
-import org.moysha.lab4t.models.DotRequestDto;
-import org.moysha.lab4t.models.DotResponseDto;
+import org.moysha.lab4t.models.PointEntity;
+import org.moysha.lab4t.models.PointReqForm;
+import org.moysha.lab4t.models.PointRespForm;
 
-import org.moysha.lab4t.service.DotService;
+import org.moysha.lab4t.service.PointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -16,30 +16,30 @@ import java.util.List;
 @RequestMapping("/api/dot")
 public class DotController {
 
-    private final DotService dotService;
+    private final PointService pointService;
 
     @Autowired
-    public DotController(DotService dotService) {
-        this.dotService = dotService;
+    public DotController(PointService pointService) {
+        this.pointService = pointService;
     }
 
     @GetMapping
-    public ResponseEntity<List<DotResponseDto>> loadUserDots(Authentication authentication) {
+    public ResponseEntity<List<PointRespForm>> loadUserDots(Authentication authentication) {
         String username = authentication.getName();
-        List<Dot> dots = dotService.findAllByUsername(username);
-        List<DotResponseDto> dotResponseDtos = dots.stream().map(DotResponseDto::new).toList();
-        return ResponseEntity.ok(dotResponseDtos);
+        List<PointEntity> pointEntities = pointService.findAllByUsername(username);
+        List<PointRespForm> pointRespForms = pointEntities.stream().map(PointRespForm::new).toList();
+        return ResponseEntity.ok(pointRespForms);
     }
 
     @PostMapping
-    public ResponseEntity<DotResponseDto> save(@RequestBody DotRequestDto dotRequestDto, Authentication authentication) {
-        Dot newDot = new Dot(dotRequestDto);
+    public ResponseEntity<PointRespForm> save(@RequestBody PointReqForm pointReqForm, Authentication authentication) {
+        PointEntity newPointEntity = new PointEntity(pointReqForm);
         String username = authentication.getName();
-        Dot savedDot = dotService.saveForUser(newDot, username);
-        if (savedDot == null) {
+        PointEntity savedPointEntity = pointService.saveForUser(newPointEntity, username);
+        if (savedPointEntity == null) {
             return ResponseEntity.badRequest().body(null);
         }
-        DotResponseDto responseDto = new DotResponseDto(savedDot);
+        PointRespForm responseDto = new PointRespForm(savedPointEntity);
         return ResponseEntity.ok(responseDto);
     }
 
