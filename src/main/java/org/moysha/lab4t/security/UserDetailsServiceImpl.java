@@ -1,5 +1,6 @@
 package org.moysha.lab4t.security;
 
+import lombok.AllArgsConstructor;
 import org.moysha.lab4t.models.AppUser;
 import org.moysha.lab4t.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +12,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository;
-
-    @Autowired
-    public UserDetailsServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     @Override
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {

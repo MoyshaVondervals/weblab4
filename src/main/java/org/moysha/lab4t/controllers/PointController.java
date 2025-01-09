@@ -22,7 +22,7 @@ public class PointController {
 
 
 
-    @GetMapping
+    @GetMapping("/get10")
     public ResponseEntity<List<PointRespForm>> loadUserDots(Authentication authentication) {
         String username = authentication.getName();
         List<PointEntity> pointEntities = pointService.findAllByUsername(username);

@@ -13,7 +13,7 @@ const TableDots = forwardRef((props, ref) => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get("http://localhost:8080/api/dot", {
+            const response = await axios.get("http://localhost:8080/api/dot/get10", {
                 headers: {
                     Authorization: "Bearer " + jwtToken,
                 },
