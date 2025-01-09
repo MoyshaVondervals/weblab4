@@ -4,10 +4,11 @@ import {Button, InputNumber, Select} from "antd";
 import { useNavigate } from "react-router-dom";
 import DrawGraph from './Graph';
 import { addPointToGraph } from "./AddDot";
-import {useAtom, useSetAtom} from "jotai/index";
+import {useAtom} from "jotai/index";
 import {globalUsernameAtom, jwtTokenAtom} from "../redux/store";
 import axios from 'axios';
 import TableDots from "./UpdateTable";
+import {useSetAtom} from "jotai";
 
 
 const Dashboard= () => {
@@ -15,14 +16,13 @@ const Dashboard= () => {
     const [Yvalue, setY] = useState("");
     const [Rvalue, setR] = useState("1");
     const [jwtToken, setJwtToken] = useAtom(jwtTokenAtom);
-    const [globalUsername, setGlobalUsername] = useAtom(globalUsernameAtom);
+    const setGlobalUsername = useSetAtom(globalUsernameAtom); // Это правильное использование
     const navigate = useNavigate();
     const [message, setMessage] = useState('');
     const svgRef = useRef(null);
     const tableRef = useRef(null);
 
-    const restorePointsOnGraph = async (svgElement) => {
-        const pointsGroup = svgElement.querySelector("#pointsGroup");
+    const restorePointsOnGraph = async () => {
 
 
         const response = await axios.get("http://localhost:8080/api/dot", {
@@ -40,7 +40,7 @@ const Dashboard= () => {
     useEffect(() => {
         const svgElement = svgRef.current;
         if (svgElement) {
-            restorePointsOnGraph(svgElement);
+            restorePointsOnGraph();
         }
     }, [jwtToken]);
     function handleLogout() {
@@ -61,7 +61,6 @@ const Dashboard= () => {
         const graphX = ((clickX - 180) / 30).toFixed(2); // 30 пикселей = 1 единица координаты
         const graphY = ((180 - clickY) / 30).toFixed(2);
 
-        console.log("Координаты графика:", graphX, graphY);
         const response = await axios.post('http://localhost:8080/api/dot',
             {
                 "x": graphX,
@@ -171,7 +170,7 @@ const Dashboard= () => {
                                    onClick={handleGraphClick}/>
                     </div>
                     <div className={"box-5"}>
-                        <Button type="primary" onClick={handleSubmit}>Check</Button>
+                        <Button type="primary" onClick={handleSubmit} >Проверить</Button>
                         {message}
                     </div>
                     <div className={"box-6"}>
@@ -183,7 +182,7 @@ const Dashboard= () => {
 
                 </div>
             </div>
-            <Button type="primary" onClick={handleLogout}>Logout</Button>
+            <Button type="primary" onClick={handleLogout} danger>Выйти</Button>
         </>
     );
 };

@@ -26,7 +26,7 @@ public class AuthService {
 
     public ResponseEntity<String> register(String username, String password) {
         System.err.println("Register start work");
-        if (userRepository.existsByUsername(username)) {
+        if (userRepository.findByUsername(username).isPresent()) {
             return new ResponseEntity<>("Username is taken!", HttpStatus.BAD_REQUEST);
         }
 

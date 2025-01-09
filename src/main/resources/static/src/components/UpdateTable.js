@@ -7,11 +7,10 @@ import { jwtTokenAtom } from "../redux/store";
 import axios from "axios";
 
 const TableDots = forwardRef((props, ref) => {
-    const [jwtToken] = useAtom(jwtTokenAtom); // Получаем токен
-    const [dataResp, setDataResp] = useState([]); // Состояние для данных таблицы
+    const [jwtToken] = useAtom(jwtTokenAtom);
+    const [dataResp, setDataResp] = useState([]);
     const navigate = useNavigate();
 
-    // Вынесенная функция fetchData
     const fetchData = async () => {
         try {
             const response = await axios.get("http://localhost:8080/api/dot", {
@@ -19,11 +18,10 @@ const TableDots = forwardRef((props, ref) => {
                     Authorization: "Bearer " + jwtToken,
                 },
             });
-            setDataResp(response.data); // Обновляем данные
+            setDataResp(response.data);
         } catch (error) {
             console.error("Ошибка при загрузке данных:", error);
             if (error.response?.status === 401) {
-                // Если токен истек, перенаправляем на страницу входа
                 navigate("/login");
             }
         }
@@ -31,10 +29,10 @@ const TableDots = forwardRef((props, ref) => {
 
     useEffect(() => {
         fetchData();
-    }, [jwtToken, navigate]); // Хук выполняется при изменении `jwtToken` или `navigate`
+    }, [jwtToken, navigate]);
 
     useImperativeHandle(ref, () => ({
-        refreshTable: fetchData, // Делаем fetchData доступной через ref
+        refreshTable: fetchData,
     }));
 
     const columns = [
@@ -61,7 +59,7 @@ const TableDots = forwardRef((props, ref) => {
                 <span style={{ color: isHit ? "green" : "red" }}>
                     {isHit ? "Hit" : "Miss"}
                 </span>
-            ), // Отображаем "Hit" зеленым, "Miss" красным
+            ),
         },
     ];
 
@@ -70,7 +68,7 @@ const TableDots = forwardRef((props, ref) => {
             <Table
                 dataSource={dataResp}
                 columns={columns}
-                rowKey={(record) => record.id} // Используем `id` как уникальный идентификатор строки
+                rowKey={(record) => record.id}
             />
         </div>
     );

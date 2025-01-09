@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface PointRepository extends JpaRepository<PointEntity, Integer> {
     @Query(value = "SELECT * FROM POINTS WHERE AUTHOR = :id ORDER BY id DESC FETCH FIRST 10 ROWS ONLY", nativeQuery = true)
-    List<PointEntity> findAllByAppUser_Id(@Param("id") Integer id);
+    List<PointEntity> find10PointsByUserId(@Param("id") Integer id);
 
 
 }

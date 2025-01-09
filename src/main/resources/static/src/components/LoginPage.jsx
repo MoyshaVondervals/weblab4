@@ -12,17 +12,12 @@ const LoginPage= () => {
     const setJwtToken = useSetAtom(jwtTokenAtom);
     const setGlobalUsername = useSetAtom(globalUsernameAtom)
     const navigate = useNavigate();
-    function handleLogout() {
-        setJwtToken(null);
-        setGlobalUsername(null);
-        navigate('/');
-    };
 
 
     const handleSubmit = async () => {
         try {
             if (!username || !password) {
-                setMessage('Please enter both username and password.');
+                setMessage('Заполните оба поля.');
                 return;
             }
 
@@ -35,7 +30,7 @@ const LoginPage= () => {
             navigate('/dashboard');
         } catch (error) {
             console.error('Login failed:');
-            setMessage('Invalid username or password.');
+            setMessage('Не правильный логин или пароль.');
         }
     };
     const goReg = () =>{
@@ -61,8 +56,6 @@ const LoginPage= () => {
             <div>
                 {message}
             </div>
-            <Button type="primary" onClick={handleLogout}>logout</Button>
-
         </div>
     );
 }

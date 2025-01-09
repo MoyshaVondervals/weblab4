@@ -28,7 +28,7 @@ public class JwtFilter extends OncePerRequestFilter {
     private JwtCore jwtCore;
 
     @Autowired
-    private CustomUserDetailsService userDetailsService;
+    private UserDetailsServiceImpl userDetailsService;
 
     @Value("${jwt.header}")
     private String jwtHeader;

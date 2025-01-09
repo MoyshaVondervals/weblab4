@@ -4,12 +4,12 @@ import "../styles/styles.css";
 import axios from "axios";
 import {useSetAtom} from "jotai/index";
 import {globalUsernameAtom, jwtTokenAtom} from "../redux/store";
+import {Button, Input} from "antd";
 
 const RegisterPage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const passwordRef = useRef(null);
+    const [message, setMessage] = useState('');
     const setJwtToken = useSetAtom(jwtTokenAtom);
     const setGlobalUsername = useSetAtom(globalUsernameAtom)
     const navigate = useNavigate();
@@ -17,7 +17,7 @@ const RegisterPage = () => {
     const handleRegister = async () => {
         try {
             if (!username || !password) {
-                setError('Please enter both username and password.');
+                setMessage('Заполните оба поля');
                 return;
             }
 
@@ -30,40 +30,35 @@ const RegisterPage = () => {
             navigate('/dashboard');
         } catch (error) {
             console.error('Login failed:');
-            setError('Invalid username or password.');
+            setMessage('Не правильные логин или пароль');
         }
     };
+    const goLog = () =>{
+        navigate("/");
+    }
 
     return (
         <>
-    <div className="register-page">
-        <h1>Register</h1>
-        <form onSubmit={handleRegister}>
-            <div>
-                <label>Username:</label>
-                    <input
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Password:</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <button type="submit">Register</button>
+            <div className="register-page">
+                <h1>Register</h1>
 
-            </form>
-            <button onClick={() => navigate("/login")}>Go to login</button>
-            <button onClick={() => navigate("/")}>Back</button>
-        </div>
-            </>
+                <Input placeholder="Username"
+                       type="text"
+                       value={username}
+                       onChange={(e) => setUsername(e.target.value)}
+                />
+                <Input.Password placeholder="Password"
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                />
+                <Button type="primary" onClick={handleRegister}>Register</Button>
+                <Button type="link" onClick={goLog}>Go to login</Button>
+                <div>
+                    {message}
+                </div>
+            </div>
+        </>
     );
 };
 

@@ -49,18 +49,15 @@ public class WebSecurityConfig {
 
 
     private CorsConfigurationSource corsConfigurationSource() {
-        return new CorsConfigurationSource() {
-            @Override
-            public CorsConfiguration getCorsConfiguration(@NonNull HttpServletRequest request) {
-                CorsConfiguration ccfg = new CorsConfiguration();
-                ccfg.setAllowedOrigins(List.of("http://localhost:3000"));
-                ccfg.setAllowedMethods(Collections.singletonList("*"));
-                ccfg.setAllowCredentials(true);
-                ccfg.setAllowedHeaders(Collections.singletonList("*"));
-                ccfg.setExposedHeaders(List.of("Authorization"));
-                ccfg.setMaxAge(3600L);
-                return ccfg;
-            }
+        return request -> {
+            CorsConfiguration ccfg = new CorsConfiguration();
+            ccfg.setAllowedOrigins(List.of("http://localhost:3000"));
+            ccfg.setAllowedMethods(Collections.singletonList("*"));
+            ccfg.setAllowCredentials(true);
+            ccfg.setAllowedHeaders(Collections.singletonList("*"));
+            ccfg.setExposedHeaders(List.of("Authorization"));
+            ccfg.setMaxAge(3600L);
+            return ccfg;
         };
 
     }

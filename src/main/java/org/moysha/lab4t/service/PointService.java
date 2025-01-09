@@ -27,7 +27,7 @@ public class PointService {
     public List<PointEntity> findAllByUsername(String username) {
         System.out.printf("Get points by username: %s\n", username);
         Integer userId = userRepository.findIdByUsername(username);
-        List<PointEntity> pointEntities = pointRepository.findAllByAppUser_Id(userId);
+        List<PointEntity> pointEntities = pointRepository.find10PointsByUserId(userId);
         if (pointEntities == null) {
             return new ArrayList<>();
         }
