@@ -43,6 +43,11 @@ const Dashboard= () => {
             restorePointsOnGraph(svgElement);
         }
     }, [jwtToken]);
+    function handleLogout() {
+        setJwtToken(null);
+        setGlobalUsername(null);
+        navigate('/');
+    };
 
 
 
@@ -81,6 +86,7 @@ const Dashboard= () => {
 
 
 
+
     const setNewDot = (data) => {
         addPointToGraph(svgRef.current, [{ x: data.x, y: data.y, r: data.r, status: data.isHit }]);
     };
@@ -107,10 +113,6 @@ const Dashboard= () => {
 
     };
 
-    const handleLogout = () => {
-
-        navigate("/login");
-    };
 
     return (
         <>
@@ -181,6 +183,7 @@ const Dashboard= () => {
 
                 </div>
             </div>
+            <Button type="primary" onClick={handleLogout}>Logout</Button>
         </>
     );
 };

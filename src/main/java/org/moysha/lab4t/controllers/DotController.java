@@ -3,8 +3,8 @@ package org.moysha.lab4t.controllers;
 import org.moysha.lab4t.models.Dot;
 import org.moysha.lab4t.models.DotRequestDto;
 import org.moysha.lab4t.models.DotResponseDto;
+
 import org.moysha.lab4t.service.DotService;
-import org.moysha.lab4t.service.DotServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -19,7 +19,7 @@ public class DotController {
     private final DotService dotService;
 
     @Autowired
-    public DotController(DotServiceImpl dotService) {
+    public DotController(DotService dotService) {
         this.dotService = dotService;
     }
 

@@ -1,9 +1,9 @@
 package org.moysha.lab4t.controllers;
 
+import lombok.AllArgsConstructor;
 import org.moysha.lab4t.models.AuthResponseDto;
 import org.moysha.lab4t.models.UserDto;
 import org.moysha.lab4t.service.AuthService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,14 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
+@AllArgsConstructor
 public class AuthController {
 
     private final AuthService authService;
 
-    @Autowired
-    public AuthController(AuthService authService) {
-        this.authService = authService;
-    }
+
 
     @PostMapping("register")
     public ResponseEntity<String> register(@RequestBody UserDto userDto) {
