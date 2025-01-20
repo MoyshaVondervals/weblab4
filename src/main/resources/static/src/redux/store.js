@@ -1,4 +1,8 @@
-import { atomWithStorage } from "jotai/utils";
+import { configureStore } from "@reduxjs/toolkit";
+import authReducer from "./authSlice";
 
-export const jwtTokenAtom = atomWithStorage("jwtToken", null);
-export const globalUsernameAtom = atomWithStorage("username", null);
+export const store = configureStore({
+    reducer: {
+        auth: authReducer,
+    },
+});

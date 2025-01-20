@@ -1,13 +1,13 @@
+// UpdateTable.jsx (или TableDots.jsx)
 import { Table } from "antd";
 import React, { useEffect, useState, forwardRef, useImperativeHandle } from "react";
 import "../styles/styles.css";
 import { useNavigate } from "react-router-dom";
-import { useAtom } from "jotai";
-import { jwtTokenAtom } from "../redux/store";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const TableDots = forwardRef((props, ref) => {
-    const [jwtToken] = useAtom(jwtTokenAtom);
+    const token = useSelector((state) => state.auth.token);
     const [dataResp, setDataResp] = useState([]);
     const navigate = useNavigate();
 
@@ -15,7 +15,7 @@ const TableDots = forwardRef((props, ref) => {
         try {
             const response = await axios.get("http://localhost:8080/api/dot/get10", {
                 headers: {
-                    Authorization: "Bearer " + jwtToken,
+                    Authorization: "Bearer " + token,
                 },
             });
             setDataResp(response.data);
@@ -29,7 +29,7 @@ const TableDots = forwardRef((props, ref) => {
 
     useEffect(() => {
         fetchData();
-    }, [jwtToken, navigate]);
+    }, [token]);
 
     useImperativeHandle(ref, () => ({
         refreshTable: fetchData,
@@ -57,8 +57,8 @@ const TableDots = forwardRef((props, ref) => {
             key: "status",
             render: (isHit) => (
                 <span style={{ color: isHit ? "green" : "red" }}>
-                    {isHit ? "Hit" : "Miss"}
-                </span>
+          {isHit ? "Hit" : "Miss"}
+        </span>
             ),
         },
     ];
